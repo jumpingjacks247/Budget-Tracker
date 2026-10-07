@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A friendly budget tracker that helps you save for what really matters." />
+  <title>JarGuard | Save for what matters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="JarGuard home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>JarGuard</span>
+      </a>
+      <div class="topbar-actions">
+        <div class="topbar-note"><span class="status-dot"></span> Your future self says thanks</div>
+        <button class="graph-button" id="jarGraphButton" type="button">
+          <span class="graph-button-icon" aria-hidden="true">▥</span>
+          <span class="graph-button-label">Savings graph</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="sparkle">✦</span> Your money, your choice</p>
+          <h1>Stop spending<br /><span>on autopilot.</span></h1>
+          <p class="hero-text">Every little purchase adds up. JarGuard helps you pause, plan, and save your money for the things you truly want.</p>
+          <button class="primary-button hero-button" id="startButton" type="button">
+            <span>Save Money</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="micro-copy"><span aria-hidden="true">✿</span> Built for big goals and small budgets</p>
+        </div>
+
+        <div class="hero-art" aria-label="Illustration of a broken money jar" role="img">
+          <div class="art-orbit orbit-one"></div>
+          <div class="art-orbit orbit-two"></div>
+          <div class="coin coin-one">$</div>
+          <div class="coin coin-two">¢</div>
+          <div class="coin coin-three">$</div>
+          <div class="jar-shadow"></div>
+          <div class="jar">
+            <div class="jar-lid"><span></span><span></span><span></span></div>
+            <div class="jar-body">
+              <div class="jar-face"><span></span><span></span><i></i></div>
+              <div class="jar-scar" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="crack crack-left"></div>
+          <div class="crack crack-right"></div>
+          <div class="art-label"><span class="label-icon">!</span> Don't spend<br />your future away.</div>
+        </div>
+      </section>
+
+      <section class="tracker-section" id="tracker" aria-labelledby="trackerTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Your money dashboard</p>
+            <h2 id="trackerTitle">Make your money<br /><em>work for you.</em></h2>
+          </div>
+          <button class="text-button" id="resetButton" type="button">Reset tracker <span aria-hidden="true">↻</span></button>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="balance-card card">
+            <div class="card-label-row">
+              <p class="card-label">Money left to spend</p>
+              <span class="shield-icon" aria-hidden="true">✓</span>
+            </div>
+            <p class="balance-amount" id="balanceAmount">$0.00</p>
+            <div class="balance-bar" aria-hidden="true"><span id="balanceBarFill"></span></div>
+            <div class="balance-meta"><span id="spentMessage">Set an allowance to get started</span><span id="balancePercent">0%</span></div>
+          </section>
+
+          <section class="mini-stat card">
+            <p class="card-label">Allowance remaining</p>
+            <p class="stat-amount" id="allowanceStat">$0.00</p>
+            <p class="stat-note" id="allowanceNote">Set an allowance to begin</p>
+          </section>
+
+          <section class="mini-stat card accent-card">
+            <p class="card-label">Total spent</p>
+            <p class="stat-amount" id="spentStat">$0.00</p>
+            <p class="stat-note"><span class="trend-icon">↘</span> Keep it intentional</p>
+          </section>
+
+          <section class="setup-card card" id="setupCard">
+            <div class="card-heading">
+              <div class="step-number">01</div>
+              <div>
+                <p class="card-label">First things first</p>
+                <h3>How much do you have?</h3>
+              </div>
+            </div>
+            <form class="allowance-form" id="allowanceForm">
+              <label for="allowanceInput">Set your allowance</label>
+              <div class="input-with-prefix"><span>$</span><input id="allowanceInput" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00" required /></div>
+              <div class="preset-row" aria-label="Allowance presets">
+                <button type="button" class="preset-button" data-allowance="20">$20</button>
+                <button type="button" class="preset-button" data-allowance="50">$50</button>
+                <button type="button" class="preset-button" data-allowance="100">$100</button>
+              </div>
+              <button class="secondary-button" type="submit">Set allowance <span aria-hidden="true">→</span></button>
+            </form>
+          </section>
+
+          <section class="spend-card card" id="spendCard">
+            <div class="card-heading">
+              <div class="step-number coral-step">02</div>
+              <div>
+                <p class="card-label">Think before you tap</p>
+                <h3>Log a purchase</h3>
+              </div>
+            </div>
+            <form class="spend-form" id="spendForm">
+              <div class="form-row">
+                <div class="field-group wide-field">
+                  <label for="purchaseInput">What are you buying?</label>
+                  <input id="purchaseInput" type="text" maxlength="40" placeholder="Gamepass, snack, gift..." required />
+                </div>
+                <div class="field-group amount-field">
+                  <label for="amountInput">Cost</label>
+                  <div class="input-with-prefix"><span>$</span><input id="amountInput" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00" required /></div>
+                </div>
+              </div>
+              <div class="form-row bottom-row">
+                <div class="field-group">
+                  <label for="budgetInput">My budget for this</label>
+                  <select id="budgetInput">
+                    <option value="10">$10 budget</option>
+                    <option value="20">$20 budget</option>
+                    <option value="30">$30 budget</option>
+                  </select>
+                </div>
+                <button class="primary-button log-button" type="submit">Add purchase <span aria-hidden="true">+</span></button>
+              </div>
+              <p class="form-helper" id="formHelper">Set an allowance first, then log your spending.</p>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section class="history-section" aria-labelledby="historyTitle">
+        <div class="history-heading">
+          <div>
+            <p class="eyebrow">Your money trail</p>
+            <h2 id="historyTitle">Recent purchases</h2>
+          </div>
+          <span class="purchase-count" id="purchaseCount">0 purchases</span>
+        </div>
+        <div class="purchase-list" id="purchaseList">
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon" aria-hidden="true">✦</div>
+            <h3>No purchases yet</h3>
+            <p>Your future self is cheering you on. Your choices will show up here.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><span>JarGuard</span><span>Pause. Plan. Prosper.</span><span>Made for your next big thing ✦</span></footer>
+  </div>
+
+  <div class="modal-backdrop" id="budgetModal" hidden>
+    <section class="warning-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close warning">×</button>
+      <div class="warning-icon" aria-hidden="true">!</div>
+      <p class="eyebrow coral-eyebrow">Tiny pause, big difference</p>
+      <h2 id="modalTitle">You're going <span>OVER BUDGET!</span></h2>
+      <p id="modalMessage">This purchase is bigger than the budget you set. Continue anyway?</p>
+      <div class="modal-actions">
+        <button class="ghost-button" id="cancelPurchase" type="button">No, I'll wait</button>
+        <button class="primary-button" id="confirmPurchase" type="button">Continue anyway <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop graph-backdrop" id="savingsModal" hidden>
+    <section class="warning-modal savings-modal" role="dialog" aria-modal="true" aria-labelledby="savingsGraphTitle">
+      <button class="modal-close" id="savingsModalClose" type="button" aria-label="Close savings graph">×</button>
+      <div class="savings-copy">
+        <p class="eyebrow">Your savings snapshot</p>
+        <h2 id="savingsGraphTitle">How full is your <em>money jar?</em></h2>
+        <p class="graph-intro">This jar starts at 100% of your allowance. Every purchase lowers the money inside.</p>
+
+        <div class="graph-data-grid">
+          <div class="graph-data-point"><span>Jar fullness</span><strong id="jarGraphPercent">0%</strong></div>
+          <div class="graph-data-point"><span>Money left</span><strong id="jarGraphAmount">$0.00</strong></div>
+        </div>
+        <p class="graph-message" id="jarGraphMessage">Set an allowance to fill your jar.</p>
+      </div>
+
+      <div class="jar-graph-area">
+        <div class="jar-graph-axis" aria-hidden="true">
+          <span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span>
+        </div>
+        <div class="jar-graph" role="img" aria-label="Savings jar graph">
+          <div class="jar-graph-neck" aria-hidden="true"></div>
+          <div class="jar-graph-lid"></div>
+          <div class="jar-graph-fill" id="jarGraphFill">
+          </div>
+          <div class="jar-graph-shine" aria-hidden="true"></div>
+          <div class="jar-graph-crack" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
